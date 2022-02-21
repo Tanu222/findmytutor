@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.error-page{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.error-page img{
+    width: 50%;
+}
+
+.error-link{
+    background-color: #4fc3f7;
+}

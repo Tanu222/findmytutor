@@ -1,6 +1,7 @@
 import {HomePage,Error,TutorDetail,TutorList,AddTutor, Register} from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Navbar,Footer} from './components'
+import {Navbar,Footer} from './components';
+
 function App() {
   return (
     <div>
