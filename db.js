@@ -5,7 +5,7 @@ const config = require('./config');
 const serviceAccount = require('./admin.json');
 
 const app = initializeApp({
-  credential: cert(serviceAccount)
+  credential: cert(serviceAccount) 
 });
 //console.log('Firebase admin app is initialized', app);
 

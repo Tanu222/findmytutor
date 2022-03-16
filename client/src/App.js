@@ -11,7 +11,7 @@ function App() {
       <Route path='/' element={<HomePage/>}/>
       <Route path='/add-tutor' element={<AddTutor/>}/>
       <Route path='/tutor-list' element={<TutorList/>}/>
-      <Route path='/tutor-detail' element={<TutorDetail/>}/>
+      <Route path='/tutor-detail/:tutorId' element={<TutorDetail/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='*' element={<Error/>}/>
     </Routes>

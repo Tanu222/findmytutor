@@ -1,20 +1,22 @@
 import { UnauthenticatedError } from "../errors/index.js";
 import jwt from "jsonwebtoken";
+const db = require('../db/admin');
 
-const auth = (req,res,next) => {
-    const authHeader = req.headers.authorization;
-    if(!authHeader || authHeader.startsWith(' Bearer')){
-        throw new UnauthenticatedError('Authentication Invalid');
+const auth = (req, res, next) => {
+    const headerToken = req.headers.authorization;
+    if (!headerToken) {
+        throw new UnauthenticatedError('No token is provided');
     }
-    const token = authHeader.split(' ')[1];
-    try{
-        const payload = jwt.verify(token,process.env.JWT_SECRET);
-        //console.log(payload);
-        req.user = {userId:payload.userId}
-        next();
-    }catch(err){
-        throw new UnauthenticatedError('Authentication Invalid')
+    if (headerToken && headerToken.split(" ")[0] !== "Bearer") {
+        throw new UnauthenticatedError('Invalid Token');
     }
+    const token = headerToken.split(" ")[1];
+    db
+        .auth()
+        .verifyIdToken(token)
+        .then(() => next())
+        .catch(() => response.send({ message: "Could not authorize" }).status(403));
+
 }
 
 export default auth;    

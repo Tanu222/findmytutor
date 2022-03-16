@@ -1,0 +1,17 @@
+.add-tutor label{
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.add-tutor .description{
+  height: 100px;
+  border-radius: 5px;
+}
+.add-tutor .form-row{
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.add-tutor .error{
+    color: red;
+}

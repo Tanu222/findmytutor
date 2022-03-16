@@ -1,27 +1,35 @@
-import { TutorCard } from "../components";
-import db from '../firebase';
-import { onSnapshot, collection } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { TutorCard,Loading } from "../components";
+
+import { useEffect } from "react";
+import { useAppContext } from "../context/appContext";
 
 const TutorList = () => {
-    const [tutors, setTutors] = useState([]);
+    const {isLoading, getTutors,tutors} = useAppContext();
 
-    useEffect(()=>
-         onSnapshot(collection(db,"tutors"),(snapshot)=>{
-            setTutors(snapshot.docs.map((doc)=>({...doc.data(), id:doc.id})));
-        })
-    ,[])
-    
+    useEffect(()=>{
+        getTutors();
+    },[])
+    if(isLoading){
+        return(
+            <Loading />
+        )
+    }
+    if(tutors.length===0){
+        return(
+            <h3 className="d-flex justify-content-center">No Jobs to Display...</h3>
+        )
+    }
     return (
+        
         <div className="row d-flex justify-content-center">
             {
-                tutors.map((tutor)=>{
-                    return(
-                        <TutorCard imageUrl={tutor.imageUrl} 
-                        tutorName={tutor.name} 
-                        tutorLocation={tutor.location} 
-                        skills={tutor.skills} key={tutor.id}
-                        className="col-md-4"/>
+                tutors.map((tutor) => {
+                    return (
+                        <TutorCard imageUrl={tutor.imageUrl}
+                            tutorName={tutor.name}
+                            tutorLocation={tutor.location}
+                            skills={tutor.skills} key={tutor.id} id={tutor.id}
+                            className="col-md-4" />
                     )
                 })
             }

@@ -1,11 +1,14 @@
 import '../assets/styles/tutor-card.css';
 
-const TutorCard = ({ imageUrl, tutorName, tutorLocation, skills }) => {
+import { Link } from 'react-router-dom';
+
+const TutorCard = ({ imageUrl, tutorName, tutorLocation, skills,id }) => {
     return (
-        <>
             <div className="tutor-container">
+                <Link to={`/tutor-detail/${id}`} style={{textDecoration:"none"}}>
                 <img className="round" src={imageUrl} alt="user" />
-                <h3>{tutorName}</h3>
+                <h3 style={{color:"#000"}}>{tutorName}</h3>
+                </Link>
                 <h6>{tutorLocation}</h6>
                 <div className="skills">
                 <h6>Skills</h6>
@@ -20,7 +23,7 @@ const TutorCard = ({ imageUrl, tutorName, tutorLocation, skills }) => {
                 </ul>
             </div>
             </div>
-        </>
+
     )
 }
 
