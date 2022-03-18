@@ -1,6 +1,6 @@
-import { UnauthenticatedError } from "../errors/index.js";
-import jwt from "jsonwebtoken";
-const db = require('../db/admin');
+const { UnauthenticatedError } = require("../errors/index.js");
+//import jwt from "jsonwebtoken";
+const db = require('../db');
 
 const auth = (req, res, next) => {
     const headerToken = req.headers.authorization;
@@ -19,4 +19,4 @@ const auth = (req, res, next) => {
 
 }
 
-export default auth;    
+module.exports =auth;    
