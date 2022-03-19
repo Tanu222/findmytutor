@@ -7,6 +7,7 @@ const morgan = require('morgan');
 require('express-async-errors');
 //routers
 const tutorRoutes = require('./routes/tutorRoutes');
+const userRoutes =  require('./routes/userRoutes');
 
 //middleware
 const notFoundMiddleware = require("./middleware/not-found.js");
@@ -21,7 +22,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //routes
-app.use('/api',authenticateUser,tutorRoutes.routes);
+app.use('/api/tutor',tutorRoutes.routes);
+app.use('/api/user',userRoutes.routes);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

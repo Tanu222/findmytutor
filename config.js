@@ -9,7 +9,7 @@ const {
     HOST,
     HOST_URL,
     API_KEY,
-    AUTH_DOMAIN,
+    AUTH_DOMAIN, 
     PROJECT_ID,
     STORAGE_BUCKET,
     MESSAGING_SENDER_ID,

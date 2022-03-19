@@ -67,8 +67,9 @@ const updateTutor = async (req, res, next) => {
 const deleteTutor = async (req, res, next) => {
     const id = req.params.id;
     const tutor = await db.collection('tutors').doc(id);
-    if (!tutor.exists) {
-        throw new NotFoundError('Tutor not found with id' + id)
+    const data = await tutor.get();
+    if (!data.exists) {
+        throw new NotFoundError('Tutor not found with id ' + id)
     }
     await db.collection('tutors').doc(id).delete();
     res.send('Record deleted successfuly');

@@ -3,11 +3,11 @@ const {addTutor,getAllTutors, getTutor,updateTutor,deleteTutor} = require('../co
 
 const router = express.Router();
 
-router.post('/tutor',addTutor);
-router.get('/tutors',getAllTutors);
-router.get('/tutor/:id',getTutor);
-router.patch('/tutor/:id',updateTutor);
-router.delete('/tutor/:id',deleteTutor);
+router.post('/add',addTutor);
+router.get('/get-all',getAllTutors);
+router.get('/get/:id',getTutor);
+router.patch('/update/:id',updateTutor); 
+router.delete('/delete/:id',deleteTutor);
 
 module.exports = {
   routes: router
