@@ -35,15 +35,14 @@ const login = async(req,res,next) =>{
         throw new BadRequestError('please provide all values');
     }
     let storedPassword = '';
-    let user = {
-        "email":req.body.email,
-        "password":req.body.password
-    }
     const queryRef = await userRef.where('email','==',email).get();
     if (queryRef.empty) {
        throw new UnauthenticatedError('User is not registered');
     }
-
+    let user = {
+        email: queryRef.docs[0].data().email,
+        username: queryRef.docs[0].data().username
+    };
     storedPassword = queryRef.docs[0].data().password;
     if(storedPassword!==password){
        throw new UnauthenticatedError('Password is Incorrect');

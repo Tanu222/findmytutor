@@ -1,6 +1,7 @@
 import {initializeApp} from 'firebase/app';
-import {getFirestore} from 'firebase/firestore';
-import {getAuth} from "firebase/auth";
+//import {getFirestore} from 'firebase/firestore';
+//import {getAuth} from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 const firebaseApp = initializeApp({
     apiKey: "AIzaSyCG58MgfOcRG2R6QrvBHQ3bQxta9TrioM8",
@@ -12,6 +13,6 @@ const firebaseApp = initializeApp({
   measurementId: "G-5RJ8Q4ZX6T"
 });
 
-const auth = getAuth(firebaseApp);
+const storage = getStorage(firebaseApp);
 
-export {auth,firebaseApp};
+export {storage};

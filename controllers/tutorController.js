@@ -9,7 +9,7 @@ const addTutor = async (req, res, next) => {
     const { name, skills, location } = req.body;
     console.log(req.body);
     if (!name || !skills || !location) {
-        throw new BadRequestError('please provide all values');
+        throw new BadRequestError('please provide all values'); 
     }
     const data = req.body;
     await db.collection('tutors').doc().set(data);
@@ -18,7 +18,7 @@ const addTutor = async (req, res, next) => {
 
 const getAllTutors = async (req, res, next) => {
     const tutors = await db.collection('tutors');
-    const data = await tutors.get();
+    const data = await tutors.orderBy('name').get();
     const tutorsArray = [];
     if (data.empty) {
         throw new NotFoundError('No tutors found')

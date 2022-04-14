@@ -23,7 +23,7 @@ const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const authFetch = axios.create({
-        baseURL: 'api/v1',
+        baseURL: 'http://localhost:5000/api',
     })
     //request
     authFetch.interceptors.request.use((config) => {
@@ -43,10 +43,10 @@ const AppProvider = ({ children }) => {
     })
 
     const getTutors = async () => {
-        const url = `http://localhost:5000/api/tutor/get-all`;
+        const url = `/tutor/get-all`;
         dispatch({ type: GET_TUTORS_BEGIN });
         try {
-            const { data } = await axios.get(url);
+            const { data } = await authFetch.get(url);
             const tutors = data;
             dispatch({
                 type: GET_TUTORS_SUCCESS,
@@ -76,7 +76,7 @@ const AppProvider = ({ children }) => {
         const url = `http://localhost:5000/api/tutor/get/${tutorId}`;
         dispatch({ type: GET_TUTOR_BEGIN });
         try {
-            const { data } = await axios.get(url);
+            const { data } = await authFetch.get(url);
             const tutor = data;
             dispatch({
                 type: GET_TUTOR_SUCCESS,
@@ -94,7 +94,7 @@ const AppProvider = ({ children }) => {
         const url = `http://localhost:5000/api/tutor/add`;
        // console.log(tutor);
         try {
-            await axios.post(url,tutor);
+            await authFetch.post(url,tutor);
             // dispatch({
             //     type: CREATE_TUTOR_SUCCESS,
             //     payload: {
@@ -174,7 +174,7 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        ...state,getTutors,getTutor,createTutor,registerUser,displayAlert,clearAlert,loginUser
+        ...state,getTutors,getTutor,createTutor,registerUser,displayAlert,clearAlert,loginUser,logoutUser
       }}
     >
       {children}

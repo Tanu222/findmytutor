@@ -5,7 +5,7 @@ import { useAppContext } from "../context/appContext";
 
 const TutorList = () => {
     const {isLoading, getTutors,tutors} = useAppContext();
-
+   // console.log(tutors);
     useEffect(()=>{
         getTutors();
     },[])
