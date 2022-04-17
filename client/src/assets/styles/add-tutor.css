@@ -15,3 +15,10 @@
 .add-tutor .error{
     color: red;
 }
+
+.dropzone-container{
+    border: 2px solid black;
+}
+.dropzone p{
+    padding: 10px;
+}

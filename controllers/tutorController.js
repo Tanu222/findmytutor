@@ -13,10 +13,14 @@ const addTutor = async (req, res, next) => {
     }
     const data = req.body;
     await db.collection('tutors').doc().set(data);
-    res.status(StatusCodes.CREATED).json(data);
+    let response = {
+        msg:"tutor created successfully",
+        success:true
+    }
+    res.status(StatusCodes.CREATED).json(response);
 };
 
-const getAllTutors = async (req, res, next) => {
+const getAllTutors = async (req, res, next) => { 
     const tutors = await db.collection('tutors');
     const data = await tutors.orderBy('name').get();
     const tutorsArray = [];

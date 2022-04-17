@@ -1,12 +1,11 @@
 import { useAppContext } from "../context/appContext";
+import { Alert } from "@mui/material";
 
-const Alert = () => {
+const ShowAlert = () => {
     const {alertText, alertType} = useAppContext();
     return(
-        <div className={`alert alert-${alertType}`}>
-           {alertText}
-        </div>
+        <Alert severity={alertType} className='m-2'>{alertText}</Alert>
     )
 }
 
-export default Alert;
+export default ShowAlert;

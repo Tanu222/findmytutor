@@ -1,14 +1,16 @@
 import { TutorCard,Loading } from "../components";
-
+import { TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 
+
 const TutorList = () => {
-    const {isLoading, getTutors,tutors} = useAppContext();
-   // console.log(tutors);
+    let {isLoading, getTutors,tutors} = useAppContext();
+
     useEffect(()=>{
         getTutors();
     },[])
+
     if(isLoading){
         return(
             <Loading />
@@ -22,6 +24,9 @@ const TutorList = () => {
     return (
         
         <div className="row d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
+             <TextField id="outlined-search" label="search" type="search" sx={{ m: 1, width: '40ch'}} />
+            </div>
             {
                 tutors.map((tutor) => {
                     return (

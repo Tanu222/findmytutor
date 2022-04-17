@@ -1,77 +1,126 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Box } from '@mui/material';
 import '../assets/styles/add-tutor.css';
 import { useAppContext } from '../context/appContext';
-import { storage } from '../firebase';
+import { ShowAlert, StyledDropzone } from '../components';
+import { nanoid } from 'nanoid';
 
-//const imagesRef = storage.ref(storage, 'images');
-//console.log(imagesRef);
+
 
 const AddTutor = () => {
-    const { createTutor,user } = useAppContext();
-    return (
-        <div>
-            <Formik
-                initialValues={{ location: '', description: '', skills: '' }}
-                validationSchema={Yup.object({
-                    location: Yup.string()
-                        .max(20, 'Must be 20 characters or less')
-                        .required('Required'),
-                    description: Yup.string()
-                        .max(250, 'Must be 250 characters or less')
-                        .required('Required'),
-                    skills: Yup.string()
-                        .max(2000, 'Must be 200 characters or less')
-                        .required('Required'),
+    console.log('Inside Add Tutor');
+    const { createTutor, user, displayAlert, showAlert } = useAppContext();
+    const navigate = useNavigate();
+    const [imageUrl,setImageUrl] = useState('');
+    const [location, setLocation] = useState('');
+    const [description, setDescription] = useState('');
+    const [skills, setSkills] = useState('');
+    const [linkedin, setLinkedin] = useState('');
+    const [github, setGithub] = useState('');
 
-                })}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        //console.log(values.skills);
-                        let tutor = {
-                            ...values,
-                            skills: values.skills.split(" "),
-                            imageUrl: 'https://randomuser.me/api/portraits/women/27.jpg',
-                            email:user.email,
-                            name:user.username
-                        }
-                        //console.log(tutor);
-                        createTutor(tutor);
-                        setSubmitting(false);
-                    }, 400);
+    const putImageUrl =(imageUrl)=>{
+        setImageUrl(imageUrl);
+    }
+
+    const onSubmit = () => {
+        if (!location || !description || !skills) {
+            displayAlert('please provide all values', 'error');
+            return;
+        }
+        setTimeout(() => {
+            //console.log(values.skills);
+            console.log(imageUrl);
+            let tutor = {
+                location: location,
+                description: description,
+                skills: skills.split(" "),
+                github: github,
+                linkedin: linkedin,
+                imageUrl: imageUrl || 'https://randomuser.me/api/portraits/women/32.jpg',
+                email: user.email,  
+                name: user.username
+            }
+            //console.log(tutor);
+            createTutor(tutor);
+            setTimeout(() => {
+                navigate('/');
+            }, 3000)
+
+        }, 400);
+        
+    }
+
+    useEffect(()=>{
+        console.log('Inside Add tutor useEffect');
+        let imageUrlGenerated = nanoid();
+         setImageUrl(imageUrlGenerated);
+    },[])
+
+    return (
+        <div className='d-flex justify-content-center'>
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '40ch' },
                 }}
+                noValidate
+                autoComplete="off"
             >
-                <Form className='text-center add-tutor '>
-                    <div className='row justify-content-center'>
-                        <label className='col-1' htmlFor="skills">Skills*</label>
-                        <Field name="skills" type="text" className='form-row col-4 m-3 p-1' placeholder=" Skills" />
-                    </div>
-                    <div className='error'>
-                        <ErrorMessage name="skills" />
-                    </div>
-                    <div className='row justify-content-center'>
-                        <label className='col-1' htmlFor="location">Location*</label>
-                        <Field name="location" type="text" className='form-row col-4 m-3 p-1' placeholder=" Location" />
-                    </div>
-                    <div className='error'>
-                        <ErrorMessage name="location" />
-                    </div>
-                    <div className='row justify-content-center'>
-                        <label htmlFor='description' className="p-3 col-1">Description*</label>
-                        <Field name="description" as="textarea" placeholder="Your Description" className='col-4 m-3 description' />
-                    </div>
-                    <div className='error '>
-                        <ErrorMessage name="description" />
-                    </div>
-                    <button type="submit" className='btn' style={{ color: "#fff", backgroundColor: "#4fc3f7" }}>Submit</button>
-                </Form>
-            </Formik>
-            {/* <form>
-            <label htmlFor="myfile">Select a file:</label>
-                    <input type="file" id="myfile" name="myfile"></input>
-                    <button type="submit" className='btn' style={{ color: "#fff", backgroundColor: "#4fc3f7" }}>Submit</button>
-            </form> */}
+                <div className='text-center display-6'>Register As a Tutor</div>
+                {
+                    showAlert && <ShowAlert />
+
+                }
+                <div>
+                    <TextField id="outlined-required"
+                        label="location"
+                        variant="outlined"
+                        value={location}
+                        name='location'
+                        onChange={(e) => setLocation(e.target.value)} />
+                </div>
+                <div>
+                    <TextField
+                        id="outlined-helperText-required"
+                        label="Skills"
+                        helperText="Separate the skills with space" value={skills}
+                        name='skills'
+                        onChange={(e) => setSkills(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        id="outlined-multiline-static-required"
+                        label="Description"
+                        multiline
+                        rows={4}
+                        value={description}
+                        name='description'
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <TextField id="outlined-required"
+                        label="Linkedin Profile"
+                        variant="outlined"
+                        value={linkedin}
+                        name='linkedin'
+                        onChange={(e) => setLinkedin(e.target.value)} />
+                </div>
+                <div>
+                    <TextField id="outlined-required"
+                        label="Github Profile"
+                        variant="outlined"
+                        value={github}
+                        name='github'
+                        onChange={(e) => setGithub(e.target.value)} />
+                </div>
+                <StyledDropzone putImageUrl={putImageUrl}/>
+                <div className='d-flex justify-content-center'>
+                    <Button variant="contained" onClick={onSubmit}>Submit</Button>
+                </div>
+            </Box>
         </div>
     )
 }

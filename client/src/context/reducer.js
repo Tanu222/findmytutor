@@ -1,13 +1,13 @@
 import { GET_TUTORS_BEGIN,GET_TUTORS_SUCCESS, GET_TUTOR_BEGIN, GET_TUTOR_SUCCESS,DISPLAY_ALERT,CLEAR_ALERT,
-    REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR,LOGIN_USER_BEGIN,LOGIN_USER_ERROR,LOGIN_USER_SUCCESS, LOGOUT_USER } from "./actions"
+    REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR,LOGIN_USER_BEGIN,LOGIN_USER_ERROR,LOGIN_USER_SUCCESS, LOGOUT_USER,ADD_TUTOR_IMAGE } from "./actions"
 
 const reducer = (state, action) => {
     if(action.type=== DISPLAY_ALERT){
         return{
             ...state,
             showAlert:true,
-            alertText:'Please provide all Values!',
-            alertType:'danger'
+            alertText:action.payload.msg,
+            alertType:action.payload.alertType
         }
     }
     if(action.type === CLEAR_ALERT){
@@ -18,8 +18,14 @@ const reducer = (state, action) => {
             alertText:''
         }
     }
-    if(action.type===GET_TUTORS_BEGIN){
+    if(action.type==ADD_TUTOR_IMAGE){
         return{
+            ...state,
+            imageUrl:action.payload.image
+        }
+    }
+    if(action.type===GET_TUTORS_BEGIN){
+        return{ 
             ...state,
             isLoading:true,
             showAlert:false
@@ -68,7 +74,7 @@ const reducer = (state, action) => {
             ...state,
             showAlert:true,
             alertText:action.payload.msg,
-            alertType:'danger',
+            alertType:'error',
             isLoading:false
         }
     }
@@ -94,7 +100,7 @@ const reducer = (state, action) => {
             ...state,
             showAlert:true,
             alertText:action.payload.msg,
-            alertType:'danger',
+            alertType:'error',
             isLoading:false
         }
     }

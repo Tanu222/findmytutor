@@ -1,12 +1,12 @@
 .dropdown {
     position: absolute;
-    top: 40px;
-    left: 0;
-    background: #5d8ffc;
-    padding: 0.5rem;
+    top: 50px;
+    right: 30px;
+    background: #4fc3f7;
+    padding: 0.2rem;
     text-align: center;
     visibility: hidden;
-    border-radius: var(--borderRadius);
+    border-radius: 5px;
   }
   .show-dropdown {
     visibility: visible;
@@ -14,23 +14,22 @@
   .dropdown-btn {
     background: transparent;
     border-color: transparent;
-    color: var(--primary-500);
-    letter-spacing: var(--letterSpacing);
+    color: white;
     text-transform: capitalize;
     cursor: pointer;
   }
-  .btn {
+  .btn1 {
+    background-color: transparent;
     display: flex;
     align-items: center; 
     justify-content: center;
     gap: 0 0.5rem;
     position: relative;
-    box-shadow: var(--shadow-2);
+    margin-top: 4px;
   }
 
   .user-icon{
       border: none;
-      margin: 10px;
   }
 
   user-img{
