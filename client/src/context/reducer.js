@@ -18,7 +18,7 @@ const reducer = (state, action) => {
             alertText:''
         }
     }
-    if(action.type==ADD_TUTOR_IMAGE){
+    if(action.type===ADD_TUTOR_IMAGE){
         return{
             ...state,
             imageUrl:action.payload.image

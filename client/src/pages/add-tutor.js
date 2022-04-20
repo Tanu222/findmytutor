@@ -9,7 +9,6 @@ import { nanoid } from 'nanoid';
 
 
 const AddTutor = () => {
-    console.log('Inside Add Tutor');
     const { createTutor, user, displayAlert, showAlert } = useAppContext();
     const navigate = useNavigate();
     const [imageUrl,setImageUrl] = useState('');
@@ -30,7 +29,7 @@ const AddTutor = () => {
         }
         setTimeout(() => {
             //console.log(values.skills);
-            console.log(imageUrl);
+            //console.log(imageUrl);
             let tutor = {
                 location: location,
                 description: description,

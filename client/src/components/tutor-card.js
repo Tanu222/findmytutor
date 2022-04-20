@@ -14,7 +14,7 @@ const TutorCard = ({ imageUrl, tutorName, tutorLocation, skills, id }) => {
         let isMounted = true;
         getDownloadURL(ref(storage, `images/${imageUrl}`))
             .then((url) => {
-                console.log(url);
+                console.log(url); 
                 if (isMounted) {
                     setImage(url);
                 }

@@ -2,21 +2,28 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const config = require('./config');
+const config = require('./server/config');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv'); 
 dotenv.config();
 require('express-async-errors');
+
+const PORT = process.env.PORT || 5000;
 //routers
-const tutorRoutes = require('./routes/tutorRoutes');
-const userRoutes =  require('./routes/userRoutes');
+const tutorRoutes = require('./server/routes/tutorRoutes');
+const userRoutes =  require('./server/routes/userRoutes');
 
 //middleware
-const notFoundMiddleware = require("./middleware/not-found.js");
-const errorHandlerMiddleware  = require('./middleware/error-handler.js');
-const auth  = require("./middleware/auth.js");
+const notFoundMiddleware = require("./server/middleware/not-found.js");
+const errorHandlerMiddleware  = require('./server/middleware/error-handler.js');
+const auth  = require("./server/middleware/auth.js");
 
 const app = express();
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('./client/build'));
+    
+}
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -31,7 +38,7 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 try{
-app.listen(config.PORT, ()=> console.log('App is listening on '+config.HOST_URL));
+app.listen(config.PORT, ()=> console.log('App is listening on '+PORT));
 }catch{
     console.log(error);
 }

@@ -3,10 +3,9 @@ import reducer from './reducer';
 import {
     GET_TUTORS_BEGIN, GET_TUTORS_SUCCESS, GET_TUTOR_SUCCESS, GET_TUTOR_BEGIN, DISPLAY_ALERT, CLEAR_ALERT,
     REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_ERROR, LOGIN_USER_SUCCESS, LOGOUT_USER,
-    ADD_TUTOR_IMAGE
 } from './actions';
 import axios from 'axios';
-import { storage, ref, getDownloadURL } from '../firebase';
+import { BASE_API_URL } from '../utils/constants';
 
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
@@ -27,7 +26,7 @@ const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const authFetch = axios.create({
-        baseURL: 'http://localhost:5000/api',
+        baseURL: BASE_API_URL,
     })
     //request
     authFetch.interceptors.request.use((config) => {
@@ -47,7 +46,7 @@ const AppProvider = ({ children }) => {
     })
 
     const getTutors = async () => {
-        const url = `/tutor/get-all`;
+        const url = `${BASE_API_URL}/tutor/get-all`;
         dispatch({ type: GET_TUTORS_BEGIN });
         try {
             const { data } = await authFetch.get(url);
@@ -78,7 +77,7 @@ const AppProvider = ({ children }) => {
 
     const getTutor = async (tutorId) => {
         //console.log('Inside get Tutor ');
-        const url = `http://localhost:5000/api/tutor/get/${tutorId}`;
+        const url = `${BASE_API_URL}/tutor/get/${tutorId}`;
         dispatch({ type: GET_TUTOR_BEGIN });
         try {
             const { data } = await authFetch.get(url);
@@ -98,12 +97,12 @@ const AppProvider = ({ children }) => {
     }
 
     const createTutor = async (tutor) => {
-        const url = `http://localhost:5000/api/tutor/add`;
+        const url = `${BASE_API_URL}/tutor/add`;
         // console.log(tutor);
         try {
             let res = await authFetch.post(url, tutor);
             console.log(res);
-            if(res.data.success==true){
+            if(res.data.success===true){
                 displayAlert('Tutor Profile Succesfully created!', 'success');
             }
         } catch (err) {
@@ -114,7 +113,7 @@ const AppProvider = ({ children }) => {
     }
 
     const registerUser = async (currentUser) => {
-        const url = `http://localhost:5000/api/user/register`;
+        const url = `${BASE_API_URL}/user/register`;
         dispatch({ type: REGISTER_USER_BEGIN })
         try {
             const response = await axios.post(url, currentUser);
@@ -139,7 +138,7 @@ const AppProvider = ({ children }) => {
         }
     }
     const loginUser = async (currentUser) => {
-        const url = `http://localhost:5000/api/user/login`;
+        const url = `${BASE_API_URL}/user/login`;
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
             const { data } = await axios.post(url, currentUser);

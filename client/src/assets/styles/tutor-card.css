@@ -14,6 +14,11 @@
 	line-height: 21px;
 }
 
+.tutor-container img{
+	height: 200px;
+	width: 200px;
+}
+
 .tutor-container {
 	/* background-color: #231E39; */
 	border-radius: 5px;
@@ -37,7 +42,7 @@
 .skills {
 	/* background-color: #1F1A36; */
 	text-align: left;
-	padding: 15px;
+	padding: 15px; 
 }
 
 .skills ul {
