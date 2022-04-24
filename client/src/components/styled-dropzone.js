@@ -1,7 +1,8 @@
 import React, { useMemo, useEffect, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { storage, uploadBytes, ref, getDownloadURL } from '../firebase';
+import { storage, uploadBytes, ref} from '../firebase';
 import { nanoid } from "nanoid";
+import Thumbnail from "./thumbnail";
 
 
 const baseStyle = {
@@ -14,11 +15,11 @@ const baseStyle = {
   borderRadius: 2,
   borderColor: "#eeeeee",
   borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
+  backgroundColor: "rgb(233 230 230)",
+  color: "rgba(2,2,2,1)",
   outline: "none",
-  height: "100px",
-  transition: "border .24s ease-in-out"
+  // height: "300px",
+  transition: "border .24s ease-in-out",
 };
 
 const activeStyle = {
@@ -37,32 +38,11 @@ const thumbsContainer = {
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
-  marginTop: 16
+  marginTop: 16,
+  maxWidth:"100px"
 };
 
-const thumb = {
-  display: "inline-flex",
-  borderRadius: 2,
-  border: "1px solid #eaeaea",
-  marginBottom: 8,
-  marginRight: 8,
-  width: "auto",
-  height: 85,
-  padding: 4,
-  boxSizing: "border-box"
-};
 
-const thumbInner = {
-  display: "flex",
-  minWidth: 0,
-  overflow: "hidden"
-};
-
-const img = {
-  display: "block",
-  width: "75px",
-  height: "75px"
-};
 
 const StyledDropzone = ({putImageUrl}) => {
   const [files, setFiles] = useState([]);
@@ -70,8 +50,13 @@ const StyledDropzone = ({putImageUrl}) => {
   const onDrop = useCallback((acceptedFiles) => {
 
     acceptedFiles.forEach((file) => {
-
-      console.log('Uploaded file', file);
+      setFiles(
+        acceptedFiles.map(file =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+      })
+      ));
+      //console.log('Uploaded file', file);
       let image = nanoid();
       let storageRef = ref(storage, `images/img-${image}`);
       //console.log('Storage Ref', storageRef);
@@ -93,14 +78,14 @@ const StyledDropzone = ({putImageUrl}) => {
     isDragActive,
     isDragAccept,
     isDragReject,
-    acceptedFiles
-  } = useDropzone({ onDrop });
+    open
+  } = useDropzone({ 
+    accept: "image/*",
+    noClick: true,
+    noKeyboard: true,
+    multiple: false,
+    onDrop: onDrop });
 
-  const selectedFiles = files?.map(file => {
-    <div>
-      <img src={file.preview} style={{ width: "200px" }} alt="file" />
-    </div>
-  })
 
   const style = useMemo(
     () => ({
@@ -112,28 +97,27 @@ const StyledDropzone = ({putImageUrl}) => {
     [isDragActive, isDragReject]
   );
 
-  const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img src={file.preview} style={img} />
-      </div>
-    </div>
-  ));
+  useEffect(
+    () => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      files.forEach(file => URL.revokeObjectURL(file.preview));
+    },
+    [files]
+  );
 
-
-  const filepath = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here</p>
+        <button type="button" onClick={open}>
+          Open File Dialog
+        </button>
+      <aside style={thumbsContainer}>
+        <Thumbnail files={files}/>
+      </aside>
       </div>
-      {selectedFiles}
     </div>
   );
 }

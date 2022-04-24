@@ -1,11 +1,31 @@
 import { FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
-import '../assets/styles/tutor-detail.css';
+import { useEffect, useState } from 'react';
+import { storage, ref, getDownloadURL } from '../firebase';
+import '../assets/styles/tutor-detail.css';  
 
 const TutorDetails = ({ tutor }) => {
+    let imageUrl = tutor.imageUrl;
+    const [image, setImage] = useState('');
+
+    useEffect(() => {
+        if(imageUrl!=='https://randomuser.me/api/portraits/women/32.jpg'){
+        let isMounted = true;
+        getDownloadURL(ref(storage, `images/${imageUrl}`))
+            .then((url) => {
+              //  console.log(url); 
+                if (isMounted) {
+                    setImage(url); 
+                }
+            });
+            return () => { isMounted = false }; 
+        }else{
+           setImage(imageUrl);
+        }
+    }, [])
     return (
         <div className="container mt-5 mb-5 tutor-detail">
             <div className="row no-gutters">
-                <div className="col-md-2 col-lg-2 text-center"><img src={tutor.imageUrl} alt='tutor-image'/></div>
+                <div className="col-md-2 col-lg-2 text-center"><img src={image} alt='tutor-image'/></div>
                 <div className="col-md-8 col-lg-8">
                     <div className="d-flex flex-column">
                         <div className="d-flex flex-row justify-content-between align-items-center p-3">

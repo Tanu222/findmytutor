@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.main{
+    height: 80%;
+    /* display: flex; */
+}
+.introSection{
+    /* background-color: rebeccapurple; */
+    height: 48vh;
+    display: flex;
+}
+.welcome{
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.homeimg{
+    height: 45vh;
+}
+
+/* CSS WHEN MAPS WILL BE USED */
+.CCard{
+    width: 30%;
+    margin-right: 8px;
+    margin-left: 8px;
+    margin-bottom: 15px;
+    top: auto;
+    margin-top: 15px;
+}
+/* .row{
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+} */
+ @media (max-width: 576px) and (max-width:768px){
+    .CCard{
+       /* height: 400px; */
+      /* width: 100pax;  */
+      height: 250px;
+      width: 317px;
+      
+    }
+    /* .row{
+        flex-wrap: nowrap; 
+        margin-top: 85px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    } */
+  }
+@media (min-width: 768px) and (max-width: 1200px){
+    .CCard{
+        height: 320px;
+    } 
+}

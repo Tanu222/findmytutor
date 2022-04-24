@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Box } from '@mui/material';
 import '../assets/styles/add-tutor.css';
 import { useAppContext } from '../context/appContext';
 import { ShowAlert, StyledDropzone } from '../components';
-import { nanoid } from 'nanoid';
-
 
 
 const AddTutor = () => {
     const { createTutor, user, displayAlert, showAlert } = useAppContext();
     const navigate = useNavigate();
-    const [imageUrl,setImageUrl] = useState('');
+    const [imageUrl,setImageUrl] = useState('https://randomuser.me/api/portraits/women/32.jpg');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [skills, setSkills] = useState('');
@@ -19,6 +17,7 @@ const AddTutor = () => {
     const [github, setGithub] = useState('');
 
     const putImageUrl =(imageUrl)=>{
+        //console.log('setting image url');
         setImageUrl(imageUrl);
     }
 
@@ -36,7 +35,7 @@ const AddTutor = () => {
                 skills: skills.split(" "),
                 github: github,
                 linkedin: linkedin,
-                imageUrl: imageUrl || 'https://randomuser.me/api/portraits/women/32.jpg',
+                imageUrl: imageUrl ,
                 email: user.email,  
                 name: user.username
             }
@@ -50,14 +49,9 @@ const AddTutor = () => {
         
     }
 
-    useEffect(()=>{
-        console.log('Inside Add tutor useEffect');
-        let imageUrlGenerated = nanoid();
-         setImageUrl(imageUrlGenerated);
-    },[])
 
     return (
-        <div className='d-flex justify-content-center'>
+        <div className='d-flex justify-content-center m-3'>
             <Box
                 component="form"
                 sx={{
@@ -115,9 +109,10 @@ const AddTutor = () => {
                         name='github'
                         onChange={(e) => setGithub(e.target.value)} />
                 </div>
+                <p>Upload Your Profile Image</p>
                 <StyledDropzone putImageUrl={putImageUrl}/>
                 <div className='d-flex justify-content-center'>
-                    <Button variant="contained" onClick={onSubmit}>Submit</Button>
+                    <Button variant="contained" onClick={onSubmit} className='m-2'>Submit</Button>
                 </div>
             </Box>
         </div>

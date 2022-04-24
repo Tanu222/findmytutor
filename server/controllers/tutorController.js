@@ -9,18 +9,18 @@ const addTutor = async (req, res, next) => {
     const { name, skills, location } = req.body;
     console.log(req.body);
     if (!name || !skills || !location) {
-        throw new BadRequestError('please provide all values'); 
+        throw new BadRequestError('please provide all values');
     }
     const data = req.body;
     await db.collection('tutors').doc().set(data);
     let response = {
-        msg:"tutor created successfully",
-        success:true
+        msg: "tutor created successfully",
+        success: true
     }
     res.status(StatusCodes.CREATED).json(response);
 };
 
-const getAllTutors = async (req, res, next) => { 
+const getAllTutors = async (req, res, next) => {
     const tutors = await db.collection('tutors');
     const data = await tutors.orderBy('name').get();
     const tutorsArray = [];
@@ -37,6 +37,38 @@ const getAllTutors = async (req, res, next) => {
                 doc.data().description
             );
             tutorsArray.push(tutor);
+        });
+        res.send(tutorsArray);
+    }
+}
+
+const searchTutor = async (req, res) => {
+    const keyword = req.query.keyword.toLowerCase();
+    //console.log(keyword);
+    const tutors = await db.collection('tutors');
+    const data = await tutors.orderBy('name').get();
+    const tutorsArray = [];
+    if (data.empty) {
+        throw new NotFoundError('No tutors found')
+    } else {
+        data.forEach(doc => {
+            let name = doc.data().name.toLowerCase();
+            let skills = doc.data().skills;
+
+            const found = skills.find(element => {
+                return element.toLowerCase().includes(keyword.toLowerCase());
+            });
+            if (name.includes(keyword) || found) {
+                const tutor = new Tutor(
+                    doc.id,
+                    doc.data().name,
+                    doc.data().skills,
+                    doc.data().imageUrl,
+                    doc.data().location,
+                    doc.data().description
+                );
+                tutorsArray.push(tutor);
+            }
         });
         res.send(tutorsArray);
     }
@@ -80,5 +112,5 @@ const deleteTutor = async (req, res, next) => {
 }
 
 module.exports = {
-    addTutor, getAllTutors, getTutor, updateTutor, deleteTutor
+    addTutor, getAllTutors, getTutor, updateTutor, deleteTutor, searchTutor
 }

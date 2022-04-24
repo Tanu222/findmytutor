@@ -26,12 +26,12 @@ function stringAvatar(name) {
     children: `${name.split(' ')[0][0]}`,
   };
 }
-const ProfileImage = ({ user }) => {
+const ProfileImage = ({ user,size }) => {
   let name = user.username;
   let color = stringToColor(name);
   return (
     <Stack direction="row" spacing={2}>
-      <Avatar {...stringAvatar(name)} sx={{ width: 32, height: 32, backgroundColor: color }} />
+      <Avatar {...stringAvatar(name)} sx={{ width: size, height: size, backgroundColor: color }} />
     </Stack>
   );
 }

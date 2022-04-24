@@ -5,6 +5,7 @@ import AddTutor from "./add-tutor";
 import TutorDetail from "./tutor-detail";
 import Register from "./register";
 import ProtectedRoute from "./protected-route";
+import MyProfile from "./myProfile";
 
 
-export { HomePage, Error, TutorDetail, TutorList, AddTutor, Register, ProtectedRoute };
+export { HomePage, Error, TutorDetail, TutorList, AddTutor, Register, ProtectedRoute,MyProfile };

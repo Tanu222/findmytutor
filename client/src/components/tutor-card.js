@@ -2,24 +2,27 @@ import '../assets/styles/tutor-card.css';
 import { storage, ref, getDownloadURL } from '../firebase';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../context/appContext';
 
 const TutorCard = ({ imageUrl, tutorName, tutorLocation, skills, id }) => {
     console.log(imageUrl);
     const [image, setImage] = useState('');
 
     useEffect(() => {
-        console.log("inside use effect");
+        // console.log("inside use effect");
         console.log(imageUrl);
+        if(imageUrl!=='https://randomuser.me/api/portraits/women/32.jpg'){
         let isMounted = true;
         getDownloadURL(ref(storage, `images/${imageUrl}`))
             .then((url) => {
-                console.log(url); 
+              //  console.log(url); 
                 if (isMounted) {
-                    setImage(url);
+                    setImage(url); 
                 }
             });
-        return () => { isMounted = false };
+            return () => { isMounted = false }; 
+        }else{
+           setImage(imageUrl);
+        }
     }, [])
 
     return (

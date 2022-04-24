@@ -65,6 +65,25 @@ const AppProvider = ({ children }) => {
         //clearAlert();
     }
 
+    const searchTutors = async(keyword)=>{
+        const url = `${BASE_API_URL}/tutor/search?keyword=${keyword}`;
+        dispatch({ type: GET_TUTORS_BEGIN });
+        try {
+            const { data } = await authFetch.get(url);
+            const tutors = data;
+
+            dispatch({
+                type: GET_TUTORS_SUCCESS,
+                payload: {
+                    tutors
+                }
+            })
+        } catch (err) {
+            console.log(err.response);
+            //logoutUser();
+        }
+    }
+
     const addUserToLocalStorage = ({ user, token }) => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
@@ -101,9 +120,11 @@ const AppProvider = ({ children }) => {
         // console.log(tutor);
         try {
             let res = await authFetch.post(url, tutor);
-            console.log(res);
+            //console.log(res);
             if(res.data.success===true){
                 displayAlert('Tutor Profile Succesfully created!', 'success');
+            }else{
+                displayAlert('Internal server Error','error');
             }
         } catch (err) {
             console.log(err.response);
@@ -187,7 +208,7 @@ const AppProvider = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
-                ...state, getTutors, getTutor, createTutor, registerUser, displayAlert, clearAlert, loginUser, logoutUser
+                ...state, getTutors, getTutor, createTutor, registerUser, displayAlert, clearAlert, loginUser, logoutUser, searchTutors
             }}
         >
             {children}

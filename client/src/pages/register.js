@@ -13,7 +13,6 @@ let initialState = {
   email: '',
   password: '',
   isMember: true,
-  password: '',
   showPassword: false
 }
 
@@ -83,7 +82,7 @@ const Register = () => {
       {!values.isMember && <TextField id="outlined-required"
           label="Name"
           type="text"
-          sx={{ m: 2, width: '40ch', display: 'flex', flexWrap: 'wrap' }}
+          sx={{ m: 2, width: '38ch', display: 'flex', flexWrap: 'wrap' }}
           variant="outlined"
           value={values.username}
           name='username'
@@ -93,14 +92,14 @@ const Register = () => {
         <TextField id="outlined-required"
           label="Email"
           type="email"
-          sx={{ m: 2, width: '40ch', display: 'flex', flexWrap: 'wrap' }}
+          sx={{ m: 2, width: '38ch', display: 'flex', flexWrap: 'wrap' }}
           variant="outlined"
           value={values.email}
           name='email'
-          onChange={handleChange}
+          onChange={handleChange} 
          />
       </div>
-      <FormControl sx={{ m: 2, width: '40ch', display: 'flex', flexWrap: 'wrap' }} variant="outlined">
+      <FormControl sx={{ m: 2, width: '38ch', display: 'flex', flexWrap: 'wrap' }} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
         <OutlinedInput
           id="outlined-adornment-password"

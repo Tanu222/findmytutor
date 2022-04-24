@@ -7,5 +7,6 @@ import ShowAlert from "./alert";
 import Logo from "./logo";
 import ProfileImage from "./profileImage";
 import StyledDropzone from "./styled-dropzone";
+import Thumbnail from "./thumbnail";
 
-export {Navbar,Footer,TutorCard,Loading, TutorDetails,ShowAlert,Logo,ProfileImage,StyledDropzone};
+export {Navbar,Footer,TutorCard,Loading, TutorDetails,ShowAlert,Logo,ProfileImage,StyledDropzone,Thumbnail};

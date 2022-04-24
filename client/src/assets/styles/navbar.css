@@ -1,23 +1,4 @@
-.dropdown {
-    position: absolute;
-    top: 50px;
-    right: 30px;
-    background: #4fc3f7;
-    padding: 0.2rem;
-    text-align: center;
-    visibility: hidden;
-    border-radius: 5px;
-  }
-  .show-dropdown {
-    visibility: visible;
-  }
-  .dropdown-btn {
-    background: transparent;
-    border-color: transparent;
-    color: white;
-    text-transform: capitalize;
-    cursor: pointer;
-  }
+
   .btn1 {
     background-color: transparent;
     display: flex;
@@ -28,10 +9,20 @@
     margin-top: 4px;
   }
 
+  .dropdown:hover{
+    cursor: pointer;
+  }
+
   .user-icon{
       border: none;
   }
 
   user-img{
       padding: 5px;
+  }
+
+  
+  
+  .bg-light{
+    background-color: #d5e9fd!important;
   }

@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaCaretDown } from "react-icons/fa";
-
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 import { useAppContext } from '../context/appContext';
 import { useState } from 'react';
 import '../assets/styles/navbar.css';
@@ -9,14 +10,27 @@ import ProfileImage from './profileImage';
 
 const Navbar = () => {
   const { user, logoutUser } = useAppContext();
-  const [showLogout, setShowLogout] = useState(false);
-  const toggleShowLogout = () => {
-    setShowLogout(!showLogout);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const gotoProfile = () => {
+    navigate('/user-profile')
   }
   return (
 
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light ">
         <div className="container-fluid">
           <Link className="navbar-brand" to='/'><Logo /></Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,17 +59,25 @@ const Navbar = () => {
               {
                 user &&
                 <div>
-                  <button type="button" className='user-icon btn1' onClick={() => { toggleShowLogout() }}>
+                  <button type="button" className='user-icon btn1' onClick={handleClick}>
                     {/* <FaUserCircle className='user-img' /> */}
-                    <ProfileImage user={user}/>
+                    <ProfileImage user={user} size='32px' />
                     {user && user.username}
                     <FaCaretDown />
                   </button>
-                  <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-                    <button type="button" className="dropdown-btn" onClick={() => { logoutUser(); toggleShowLogout(); }}>
-                      logout
-                    </button>
-                  </div>
+                  <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <Typography sx={{ p: 2 }} className='dropdown' onClick={() => { gotoProfile(); }}>Profile</Typography>
+                    <Typography sx={{ p: 2 }} className='dropdown' onClick={() => { logoutUser();}}>Logout</Typography>
+                  </Popover>
                 </div>
               }
             </ul>
