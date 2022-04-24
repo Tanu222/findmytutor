@@ -25,11 +25,10 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start-client": "react-scripts start",
-    "build": "react-scripts build && (cd.. && cd server && npm install)",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "cd.. && cd server && npm start"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
