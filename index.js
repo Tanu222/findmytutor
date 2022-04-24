@@ -9,6 +9,10 @@ dotenv.config();
 require('express-async-errors');
 
 const PORT = process.env.PORT || 5000;
+
+// const buildPath = path.join(__dirname, '..', 'build');
+// app.use(express.static(buildPath));
+
 //routers
 const tutorRoutes = require('./server/routes/tutorRoutes');
 const userRoutes =  require('./server/routes/userRoutes');
