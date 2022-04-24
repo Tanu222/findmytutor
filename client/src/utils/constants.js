@@ -1,1 +1,1 @@
-export const BASE_API_URL = '';
+export const BASE_API_URL = 'https://skilup.herokuapp.com/api';

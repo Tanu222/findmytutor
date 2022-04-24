@@ -6,3 +6,5 @@
   "test": "react-scripts test",
   "eject": "react-scripts eject"
 }
+
+change constants to ''
