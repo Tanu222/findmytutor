@@ -1,10 +1,6 @@
 "start": "concurrently --kill-others-on-fail \"npm run server\" \" npm run client\""
 
-"scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
-}
+"start": "node index.js",
+"build": "cd client/ && npm install && npm run build"
 
 change constants to ''
