@@ -25,9 +25,9 @@ const auth  = require("./server/middleware/auth.js");
 
 const app = express();
 app.use(express.json())
-app.use(
-    express.static(path.join(__dirname, "../client/build"))
-);
+// app.use(
+//     express.static(path.join(__dirname, "./client/build"))
+// );
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('./client/build'));
@@ -42,11 +42,11 @@ app.use(bodyParser.json());
 //routes
 app.use('/api/tutor',tutorRoutes.routes);
 app.use('/api/user',userRoutes.routes);
-app.get("*", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "./client/build/index.html")
-    );
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(
+//         path.join(__dirname, "./client/build/index.html")
+//     );
+// });
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
