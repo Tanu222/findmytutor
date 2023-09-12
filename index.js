@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./server/config');
 const morgan = require('morgan');
-import * as path from "path";
+const path =  require("path");
 const dotenv = require('dotenv'); 
 dotenv.config();
 require('express-async-errors');
@@ -40,8 +40,13 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 //routes
-app.use('/api/tutor',auth,tutorRoutes.routes);
+app.use('/api/tutor',tutorRoutes.routes);
 app.use('/api/user',userRoutes.routes);
+app.get("*", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "./client/build/index.html")
+    );
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
