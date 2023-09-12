@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./server/config');
 const morgan = require('morgan');
+import * as path from "path";
 const dotenv = require('dotenv'); 
 dotenv.config();
 require('express-async-errors');
